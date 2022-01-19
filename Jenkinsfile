@@ -44,7 +44,7 @@ node {
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
         echo "$passedBuilds"
-        //echo getChangedFiles(passedBuilds)
+        getChangedFiles(passedBuilds)
     }
 
     stage('apply') {
