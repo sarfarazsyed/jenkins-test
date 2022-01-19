@@ -72,8 +72,11 @@ def getChangedFiles(passedBuilds) {
                 def commitMsg = "Commit Information \nAuhor Name: $item.authorName\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\nChanged files: "
                 def modifiedFiles = item.affectedFiles
                 for (int k = 0; k < modifiedFiles.size(); k++) {
-                    commitMsg = commitMsg + "\n\t|\n\t|-> $modifiedFiles[k].path"
-                    files.add(modifiedFiles[k].path)
+                    def path = modifiedFiles[k].path
+                    if(!path.contains("Jenkinsfile") ) {
+                        commitMsg = commitMsg + "\n\t|\n\t|-> ${modifiedFiles[k].path}"
+                        files.add(path)
+                    }
                 }
                 echo commitMsg
             }
