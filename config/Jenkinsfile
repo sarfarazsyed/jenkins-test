@@ -30,9 +30,9 @@ node {
             files
             .each {
                 if(it.contains("stage")) {
-                    sh("echo $it | grep stage | sed 's#/# #g' | awk '{print \$3\" \"./config/configmap/\$3/stage.yaml}'")
+                    sh("echo $it | grep stage | sed 's#/# #g' | awk '{print \$3\" \"\./config/configmap/\$3/stage\.yaml}'")
                 } else {
-                    sh("echo $it | grep dev | sed 's#/# #g' | awk '{print \$3\" \"./config/configmap/\$3/dev.yaml}'")
+                    sh("echo $it | grep dev | sed 's#/# #g' | awk '{print \$3\" \"\./config/configmap/\$3/dev\.yaml}'")
                 }
                
                 //sh("echo $it | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
