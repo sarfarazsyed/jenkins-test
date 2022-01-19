@@ -29,7 +29,7 @@ node {
             files
             .each {
                 def configName = sh(returnStdout: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
-                echo ${configName}
+                sh "echo ${configName}"
                 if(it.contains("stage")) {
                     sh("echo ${configName} > ./config/configmap/${configName}/stage.yaml")
                 } else {
