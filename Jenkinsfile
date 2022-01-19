@@ -14,8 +14,8 @@ node {
         echo "build" 
 
         checkout scm
-        echo "current git commit is ${env.GIT_COMMIT}"
-        echo "previous git commit is ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        echo "current git commit is ${GIT_COMMIT}"
+        echo "previous git commit is ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
         
 
 
