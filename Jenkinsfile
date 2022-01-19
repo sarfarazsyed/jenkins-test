@@ -20,7 +20,7 @@ node {
         // checkout(scm) {
         //     echo "GIT_COMMIT is ${env.GIT_COMMIT}"
         // }
-            echo "GIT_COMMIT is  ${GIT_COMMIT}"
+            echo "GIT_COMMIT is  $GIT_COMMIT"
             sh()
         
         // checkout([$class: 'GitSCM']) {
