@@ -16,30 +16,7 @@ node {
         echo "build" 
 
         checkout scm
-        sh("ls ")
-        // checkout(scm) {
-        //     echo "GIT_COMMIT is ${env.GIT_COMMIT}"
-        // }
-            //echo "GIT_COMMIT is  $GIT_COMMIT"
-            
         
-        // checkout([$class: 'GitSCM']) {
-        //     branchanme = "${GIT_BRANCH}"
-        //     currentGitCommit = "${GIT_COMMIT}"
-        //     previousGitCommit = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-        // }
-        
-        // echo "branchanme $branchanme"
-        // echo "currentGitCommit $currentGitCommit"
-        // echo "previousGitCommit $previousGitCommit"
-        // echo "Latest commit id : "
-        sh("git log -n 1")
-        
-
-        echo "Modified commits 1"
-        echo "Modified commits 2"
-        echo "Modified commits 3"
-        //echo sendChangeLogs()
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
@@ -48,7 +25,8 @@ node {
     }
 
     stage('apply') {
-        sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
+        sh("echo ${files}")
+       // sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
         
         echo "apply config"   
     }
