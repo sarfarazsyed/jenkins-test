@@ -69,7 +69,7 @@ def getChangedFiles(passedBuilds) {
             def items = changeLogSets[i].items
             for (int j = 0; j < items.size(); j++) {
                 def item = items[j]
-                def commitMsg = "Commit Information \nAuhor Name: $item.authorName\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\nChanged files: "
+                def commitMsg = "Commit Information \nAuhor Name: $item.author\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\nChanged files: "
                 def modifiedFiles = item.affectedFiles
                 for (int k = 0; k < modifiedFiles.size(); k++) {
                     def path = modifiedFiles[k].path
