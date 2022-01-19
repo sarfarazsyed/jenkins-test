@@ -29,7 +29,11 @@ node {
         } else {
             files
             .each {
-                sh("echo $it | grep dev")
+                if(it.contains("stage")) {
+                    sh("echo $it | grep dev")
+                } else {
+                    sh("echo $it | grep dev")
+                }
                 //sh("echo $it | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
             }
             //sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
