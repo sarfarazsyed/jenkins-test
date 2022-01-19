@@ -15,7 +15,7 @@ node {
         echo "build" 
 
         checkout scm
-        branchanme = "${env.BRANCH}"
+        branchanme = "${env}"
         currentGitCommit = "${env.GIT_COMMIT}"
         previousGitCommit = "${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
         echo "branchanme $branchanme"
