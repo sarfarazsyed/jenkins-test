@@ -69,7 +69,7 @@ def getChangedFiles(passedBuilds) {
             def items = changeLogSets[i].items
             for (int j = 0; j < items.size(); j++) {
                 def item = items[j]
-                echo "Commit Information \nAuhor Name: $item.authorName\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\n Commit Message : *$item.msg*\n"
+                echo "Commit Information \nAuhor Name: $item.authorName\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\n"
                 def modifiedFiles = item.affectedFiles
                 for (int k = 0; k < modifiedFiles.size(); k++) {
                     files.add(modifiedFiles[k].path)
@@ -79,8 +79,7 @@ def getChangedFiles(passedBuilds) {
     }
     
     def filesInSortedOrder=files.toSorted()
-    echo "Changed files: \n"
-    printArray(filesInSortedOrder)
+    echo getModifiedFilesString(filesInSortedOrder)
     return filesInSortedOrder
 }
 
@@ -91,9 +90,11 @@ def printProperties(item) {
     }
 }
 
-def printArray(array) {
+def getModifiedFilesString(array) {
+    def msg = "Changed files: "
     array
     .each { 
-        println "\n\t|\n\t->$it" 
+        msg = msg+ "\n\t|\n\t|->$it" 
     }
+    return msg
 }
