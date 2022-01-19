@@ -8,17 +8,25 @@ node {
         wrap([$class: 'BuildUser']) {
             username = "${BUILD_USER}"
         }
-        echo "$username"
+        echo "user who built the code is $username"
     }
 
     stage('build') {
         echo "build" 
 
         checkout scm
-
-        sh '${env.BRANCH}'
-        echo "current git commit is ${GIT_COMMIT}"
-        echo "previous git commit is ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        branchanme = "${env.BRANCH}"
+        currentGitCommit = "${env.GIT_COMMIT}"
+        previousGitCommit = "${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        branchnameNonEnv = "${BRANCH}"
+        currentGitCommitNonEnv = "${GIT_COMMIT}"
+        previousGitCommitNonEnv = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        echo "branchanme $branchanme"
+        echo "currentGitCommit $currentGitCommit"
+        echo "previousGitCommit $previousGitCommit"
+        echo "branchnameNonEnv $branchnameNonEnv"
+        echo "currentGitCommitNonEnv $currentGitCommitNonEnv"
+        echo "previousGitCommitNonEnv $previousGitCommitNonEnv"
         
 
 
