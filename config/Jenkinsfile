@@ -1,8 +1,9 @@
 import java.text.*
 node {
 
-    sh("ls config/configmap/")
-    sh("ls config/configmap/")
+    sh("ls config/configmap/a/")
+    sh("ls config/configmap/b/")
+    sh("ls config/configmap/c/")
 
    stage('Validation') {
         echo "validation"
@@ -17,7 +18,7 @@ node {
     stage('build') {
 
         checkout scm
-        sh("ls")
+        sh("ls -d 4")
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
@@ -31,10 +32,12 @@ node {
         } else {
             files
             .each {
+                def configName = sh(returnStdOut: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
+                echo configName
                 if(it.contains("stage")) {
-                    sh("echo $it | grep stage | sed 's#/# #g' | echo \$3 > ./config/configmap/\$3/stage.yaml")
+                    sh("echo $3 > ./config/configmap/$3/stage.yaml")
                 } else {
-                    sh("echo $it | grep dev | sed 's#/# #g' | echo \$3 > ./config/configmap/\$3/dev.yaml")
+                    sh("echo $3 > ./config/configmap/$3/dev.yaml")
                 }
             }
         }
