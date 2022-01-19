@@ -1,8 +1,8 @@
 import java.text.*
 node {
 
-    sh("cat config/configmap/a/stage.yaml")
-    sh("cat config/configmap/a/dev.yaml")
+    sh("ls config/configmap/")
+    sh("ls config/configmap/")
 
    stage('Validation') {
         echo "validation"
