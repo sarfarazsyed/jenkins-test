@@ -13,7 +13,6 @@ node {
     }
 
     stage('build') {
-        echo "build" 
 
         checkout scm
         
@@ -25,10 +24,15 @@ node {
     }
 
     stage('apply') {
-        sh("echo ${files}")
+        if(files.size() < 0) {
+            echo "No Updated configmaps found"
+        } else {
+            sh("echo ${files}")
+            //sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
+        }
        // sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
         
-        echo "apply config"   
+         
     }
 }
 
