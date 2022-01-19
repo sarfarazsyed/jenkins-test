@@ -1,6 +1,7 @@
 import java.text.*
 node {
 
+    sh("ls")
 
    stage('Validation') {
         echo "validation"
@@ -15,7 +16,7 @@ node {
     stage('build') {
 
         checkout scm
-        
+        sh("ls")
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
