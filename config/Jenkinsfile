@@ -15,6 +15,8 @@ node {
 
         checkout scm
         sh("ls -R")
+        sh("rm -f dev.yaml")
+        sh("rm -f stage.yaml")
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
