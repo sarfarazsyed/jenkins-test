@@ -1,1 +1,1 @@
-This is B file. Modified B file.mod
+This is B file. Modified B file.Modified
