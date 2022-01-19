@@ -26,14 +26,15 @@ node {
         if(files.size() < 0) {
             echo "No dev or stage updated configmaps found"
         } else {
+            def kubeStageCmd="kubectl create "
             files
             .each {
                 def configName = sh(returnStdout: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
                 sh "echo ${configName}"
                 if(it.contains("stage")) {
-                    sh("echo ${configName} > ./config/configmap/${configName}/stage.yaml")
+                    sh "${kubeStageCmd} create configmap ${configName} --from-file=./config/configmap/${configName}/stage.yaml -o yaml --dry-run | kubectl replace -f -"
                 } else {
-                    sh("echo ${configName} > ./config/configmap/${configName}/dev.yaml")
+                    sh "${kubeStageCmd} create configmap ${configName} --from-file=./config/configmap/${configName}/dev.yaml -o yaml --dry-run | kubectl replace -f -"
                 }
             }
         }
