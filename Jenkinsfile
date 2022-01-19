@@ -37,7 +37,7 @@ node {
         
 
         echo "changed commits"
-        sendChangeLogs()
+        echo sendChangeLogs()
     }
 
     stage('apply') {
