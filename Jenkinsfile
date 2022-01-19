@@ -36,18 +36,20 @@ node {
         sh("git log -n 1")
         
 
-        echo "changed commits 1"
-        echo "changed commits 2"
-        echo "changed commits 3"
+        echo "Modified commits 1"
+        echo "Modified commits 2"
+        echo "Modified commits 3"
         //echo sendChangeLogs()
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
         echo "$passedBuilds"
-        getChangedFiles(passedBuilds)
+        files = getModifiedFiles(passedBuilds)
     }
 
     stage('apply') {
+        sh('''${files} | grep 'dev' | sed 's#/# #g' | awk '{print $3" ./config/configmap/"$3"/dev.yaml";}''')
+        //sh('''${files} | grep 'dev' | sed 's#/# #g' | awk '{print $2" ./"$2"/dev.yaml";}' | awk '{ $kubeDevCmd create configmap $1 --from-file=$2 -o yaml --dry-run | kubectl replace -f - }' ''')
         echo "apply"   
     }
 }
@@ -60,7 +62,7 @@ def lastSuccessfulBuild(passedBuilds, build) {
    }
 }
  
-def getChangedFiles(passedBuilds) {
+def getModifiedFiles(passedBuilds) {
     def files = [] as Set
     for (int h = 0; h < passedBuilds.size(); h++) {
         def changeLogSets = passedBuilds[h].changeSets
@@ -69,12 +71,12 @@ def getChangedFiles(passedBuilds) {
             def items = changeLogSets[i].items
             for (int j = 0; j < items.size(); j++) {
                 def item = items[j]
-                def commitMsg = "Commit Information \nAuhor Name: $item.author\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\nChanged files: "
+                def commitMsg = "Commit Information \nAuhor Name: $item.author\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\nCommit Message : *$item.msg*\nModified files: "
                 def modifiedFiles = item.affectedFiles
                 for (int k = 0; k < modifiedFiles.size(); k++) {
                     def path = modifiedFiles[k].path
-                    if(!path.contains("Jenkinsfile") ) {
-                        commitMsg = commitMsg + "\n\t|\n\t|-> ${modifiedFiles[k].path}"
+                    commitMsg = commitMsg + "\n\t|\n\t|-> ${modifiedFiles[k].path}"
+                    if(path.contains("config/configmap")) {
                         files.add(path)
                     }
                 }
@@ -82,14 +84,13 @@ def getChangedFiles(passedBuilds) {
             }
         }
     }
-    
     def filesInSortedOrder=files.toSorted()
     echo getModifiedFilesString(filesInSortedOrder)
     return filesInSortedOrder
 }
 
 def getModifiedFilesString(array) {
-    def msg = "Changed files: "
+    def msg = "Modified Config files: "
     array
     .each { 
         msg = msg+ "\n\t|\n\t|->$it" 
