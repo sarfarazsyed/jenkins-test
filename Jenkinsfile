@@ -13,10 +13,10 @@ node {
     stage('build') {
         echo "build" 
 
-        withCheckout(scm) {
-            echo "current git commit is ${env.GIT_COMMIT}"
-            echo "previous git commit is ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-        }
+        checkout scm
+        echo "current git commit is ${env.GIT_COMMIT}"
+        echo "previous git commit is ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        
 
 
     }
