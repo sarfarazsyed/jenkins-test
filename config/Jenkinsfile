@@ -35,9 +35,9 @@ node {
                 def configName = sh(returnStdOut: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
                 echo configName
                 if(it.contains("stage")) {
-                    sh("echo $3 > ./config/configmap/$3/stage.yaml")
+                    sh("echo ${configName} > ./config/configmap/${configName}/stage.yaml")
                 } else {
-                    sh("echo $3 > ./config/configmap/$3/dev.yaml")
+                    sh("echo ${configName} > ./config/configmap/${configName}/dev.yaml")
                 }
             }
         }
