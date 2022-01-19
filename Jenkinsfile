@@ -73,7 +73,7 @@ def getChangedFiles(passedBuilds) {
                 echo "retrieved items"
                 def item = items[j]
                 printProperties(item)
-                //echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
+                print "item.authorName item.commitId}:formatter.format(new Date(item.timestamp))}: *item.msg*\n"
                 
                 def modifiedFiles = item.affectedFiles
                 echo " modified files ${h} : ${modifiedFiles} \n"
