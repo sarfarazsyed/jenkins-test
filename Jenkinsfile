@@ -84,7 +84,7 @@ def getChangedFiles(passedBuilds) {
         }
     }
     echo "Found changes in files: ${files}"
-    def filesInSortedOrder=files.sorted()
+    def filesInSortedOrder=files.toSorted()
     printArray(filesInSortedOrder)
     return filesInSortedOrder
 }
