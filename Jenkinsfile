@@ -36,7 +36,7 @@ node {
         sh("git log -n 1")
         
 
-        echo "changed commits"
+        echo "changed commits 1"
         echo sendChangeLogs()
     }
 
