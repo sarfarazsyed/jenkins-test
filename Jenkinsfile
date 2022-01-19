@@ -44,7 +44,7 @@ node {
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
         echo "$passedBuilds"
-        echo getChangedFiles(passedBuilds)
+        //echo getChangedFiles(passedBuilds)
     }
 
     stage('apply') {
@@ -84,12 +84,21 @@ def getChangedFiles(passedBuilds) {
         }
     }
     echo "Found changes in files: ${files}"
-    return files.toSorted()
+    def filesInSortedOrder=files.sorted()
+    printArray(filesInSortedOrder)
+    return filesInSortedOrder
 }
 
 def printProperties(item) {
     item.properties
     .each { 
-        println "$it.key -> $it.value" 
+        print "$it.key -> $it.value \t" 
+    }
+}
+
+def printArray(array) {
+    array
+    .each { 
+        println "$it" 
     }
 }
