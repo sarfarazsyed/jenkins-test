@@ -40,6 +40,11 @@ node {
         echo "changed commits 2"
         echo "changed commits 3"
         echo sendChangeLogs()
+
+        passedBuilds = []
+        lastSuccessfulBuild(passedBuilds, currentBuild)
+        echo "$passedBuilds"
+        echo getChangedFiles(passedBuilds)
     }
 
     stage('apply') {
@@ -60,4 +65,27 @@ def sendChangeLogs() {
         }
     }
     return "Job: `${env.JOB_NAME}`. Starting build with changes:\n${commitMessages}"
+}
+
+def lastSuccessfulBuild(passedBuilds, build) {
+  if ((build != null) && (build.result != 'SUCCESS')) {
+      passedBuilds.add(build)
+      lastSuccessfulBuild(passedBuilds, build.getPreviousBuild())
+   }
+}
+ 
+def getChangedFiles(passedBuilds) {
+    def files = [] as Set // as Set assumes uniqueness
+    passedBuilds.each {
+        def changeLogSets = it.rawBuild.changeSets
+        changeLogSets.each {
+            it.items.each {
+                it.affectedFiles.each {
+                    files.add(it.path)
+                }
+            }
+        }
+    }
+    echo "Found changes in files: ${files}"
+    return files.toSorted()
 }
