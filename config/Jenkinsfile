@@ -52,7 +52,6 @@ def getModifiedFiles(passedBuilds) {
     def files = [] as Set
     for (int h = 0; h < passedBuilds.size(); h++) {
         def changeLogSets = passedBuilds[h].changeSets
-        echo " change log sets ${h} : ${changeLogSets} \n"
         for (int i = 0; i < changeLogSets.size(); i++) {
             def items = changeLogSets[i].items
             for (int j = 0; j < items.size(); j++) {
