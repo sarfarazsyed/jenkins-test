@@ -48,7 +48,7 @@ node {
     }
 
     stage('apply') {
-        sh('''${files} | grep 'dev' | sed 's#/# #g' | awk '{print $3" ./config/configmap/"$3"/dev.yaml";}''')
+        sh("${files} | grep 'dev' | sed 's#/# #g' | awk '{print $3\" ./config/configmap/\"$3\"/dev.yaml\";}")
         //sh('''${files} | grep 'dev' | sed 's#/# #g' | awk '{print $2" ./"$2"/dev.yaml";}' | awk '{ $kubeDevCmd create configmap $1 --from-file=$2 -o yaml --dry-run | kubectl replace -f - }' ''')
         echo "apply"   
     }
