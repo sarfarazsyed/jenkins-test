@@ -25,7 +25,7 @@ node {
     stage('apply') {
 
         dir("config/configmap") {
-            def data = sh(returnStdout: true, script: "find . -type f | grep dev | sed 's#/# #g'").trim()
+            def data = sh(returnStdout: true, script: "find . -type f | grep dev | sed 's#/# #g' | awk '{print \$2}'").trim()
             echo data
             //sh "for i in ``;do kctl create configmap $i --from-file=./config/configmap/$i/s.yaml -o yaml --dry-run | kctl replace -f -;done;"
         }
