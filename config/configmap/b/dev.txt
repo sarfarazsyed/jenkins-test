@@ -1,1 +1,1 @@
-I am b file
+This is B file
