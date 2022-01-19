@@ -17,6 +17,7 @@ node {
         sh("ls -R")
         sh("rm -f dev.yaml")
         sh("rm -f stage.yaml")
+        sh("ls -R")
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
