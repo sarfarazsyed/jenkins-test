@@ -16,7 +16,7 @@ node {
 
         checkout scm
 
-        wrap([$class: 'GitSCM']) {
+        checkout([$class: 'GitSCM']) {
             branchanme = "${GIT_BRANCH}"
             currentGitCommit = "${GIT_COMMIT}"
             previousGitCommit = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
