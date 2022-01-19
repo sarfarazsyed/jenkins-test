@@ -29,7 +29,7 @@ node {
         } else {
             files
             .each {
-                if($it.contains("stage")) {
+                if(it.contains("stage")) {
                     sh("echo $it | grep stage | sed 's#/# #'")
                 } else {
                     sh("echo $it | grep dev | sed 's#/# #'")
