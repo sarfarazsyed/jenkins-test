@@ -67,6 +67,7 @@ def sendChangeLogs() {
     return "Job: `${env.JOB_NAME}`. Starting build with changes:\n${commitMessages}"
 }
 
+@NonCPS
 def lastSuccessfulBuild(passedBuilds, build) {
   if ((build != null) && (build.result != 'SUCCESS')) {
       passedBuilds.add(build)
@@ -74,7 +75,8 @@ def lastSuccessfulBuild(passedBuilds, build) {
    }
 }
  
-def getChangedFiles(passedBuilds) {
+ @NonCPS
+def getChangedFiles(passedBuilds, build) {
     def files = [] as Set // as Set assumes uniqueness
     passedBuilds.each {
         def changeLogSets = it.rawBuild.changeSets
