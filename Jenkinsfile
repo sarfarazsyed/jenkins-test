@@ -8,6 +8,7 @@ node {
         wrap([$class: 'BuildUser']) {
             username = "${BUILD_USER}"
         }
+        echo "$username"
     }
 
     stage('build') {
