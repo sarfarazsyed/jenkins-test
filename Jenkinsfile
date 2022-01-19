@@ -15,7 +15,7 @@ node {
         echo "build" 
 
         checkout scm
-
+        sh("ls ")
         checkout([$class: 'GitSCM']) {
             branchanme = "${GIT_BRANCH}"
             currentGitCommit = "${GIT_COMMIT}"
