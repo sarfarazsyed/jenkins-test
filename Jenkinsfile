@@ -68,7 +68,7 @@ def getChangedFiles(passedBuilds) {
         for (int i = 0; i < changeLogSets.size(); i++) {
             def items = changeLogSets[i].items
             echo " items ${i} : ${items} \n"
-            printProperties(item)
+            printProperties(items)
             for (int j = 0; j < items.size(); j++) {
                 echo "retrieved items"
                 def item = items[j]
