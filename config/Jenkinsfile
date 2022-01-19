@@ -26,7 +26,7 @@ node {
 
         dir("config/configmap") {
 
-            sh "find . -type f | grep dev | sed 's#/# #g' | awk '{system(\"kctl create configmap \"\$2\" --from-file=\./config/configmap/\"$2\"/s\.yaml -o yaml --dry-run | kctl replace -f -\")}'"
+            sh "find . -type f | grep dev | sed 's#/# #g' | awk '{system(\"kctl create configmap \"\$2\" --from-file=./config/configmap/\"$2\"/s.yaml -o yaml --dry-run | kctl replace -f -\")}'"
 
         }
 
