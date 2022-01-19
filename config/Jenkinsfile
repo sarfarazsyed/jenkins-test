@@ -23,22 +23,28 @@ node {
     }
 
     stage('apply') {
-        if(files.size() < 0) {
-            echo "No dev or stage updated configmaps found"
-        } else {
-            def kubeStageCmd="kubectl "
-            sh "set -o xtrace"
-            files
-            .each {
-                def configName = sh(returnStdout: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
-                sh "echo ${configName}"
-                if(it.contains("stage")) {
-                    sh "${kubeStageCmd} create configmap ${configName} --from-file=./config/configmap/${configName}/stage.yaml -o yaml --dry-run | kubectl replace -f -"
-                } else {
-                    sh "${kubeStageCmd} create configmap ${configName} --from-file=./config/configmap/${configName}/dev.yaml -o yaml --dry-run | kubectl replace -f -"
-                }
-            }
+
+        dir("config/configmap") {
+
+            find . -type f | grep dev | sed 's#/# #g' | awk '{system(\"kctl create configmap \"\$2\" --from-file=\./config/configmap/\"$2\"/s\.yaml -o yaml --dry-run | kctl replace -f -\")}'
+
         }
+
+        // if(files.size() < 0) {
+        //     echo "No dev or stage updated configmaps found"
+        // } else {
+        //     def kubeStageCmd="kubectl "
+        //     files
+        //     .each {
+        //         def configName = sh(returnStdout: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
+        //         sh "echo ${configName}"
+        //         if(it.contains("stage")) {
+        //             sh ""
+        //         } else {
+        //             sh "${kubeStageCmd} create configmap ${configName} --from-file=./config/configmap/${configName}/dev.yaml -o yaml --dry-run | kubectl replace -f -"
+        //         }
+        //     }
+        // }
          
     }
 }
