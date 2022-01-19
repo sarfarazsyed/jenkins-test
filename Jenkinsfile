@@ -16,16 +16,19 @@ node {
 
         checkout scm
         sh("ls ")
-        checkout([$class: 'GitSCM']) {
-            branchanme = "${GIT_BRANCH}"
-            currentGitCommit = "${GIT_COMMIT}"
-            previousGitCommit = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        withCheckout(scm) {
+            echo "GIT_COMMIT is ${env.GIT_COMMIT}"
         }
+        // checkout([$class: 'GitSCM']) {
+        //     branchanme = "${GIT_BRANCH}"
+        //     currentGitCommit = "${GIT_COMMIT}"
+        //     previousGitCommit = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+        // }
         
-        echo "branchanme $branchanme"
-        echo "currentGitCommit $currentGitCommit"
-        echo "previousGitCommit $previousGitCommit"
-        echo "Latest commit id : "
+        // echo "branchanme $branchanme"
+        // echo "currentGitCommit $currentGitCommit"
+        // echo "previousGitCommit $previousGitCommit"
+        // echo "Latest commit id : "
         sh("git log -n 1")
         
 
