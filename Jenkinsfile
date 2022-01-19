@@ -61,30 +61,25 @@ def lastSuccessfulBuild(passedBuilds, build) {
 }
  
 def getChangedFiles(passedBuilds) {
-    def files = [] as Set // as Set assumes uniqueness
+    def files = [] as Set
     for (int h = 0; h < passedBuilds.size(); h++) {
         def changeLogSets = passedBuilds[h].changeSets
         echo " change log sets ${h} : ${changeLogSets} \n"
         for (int i = 0; i < changeLogSets.size(); i++) {
             def items = changeLogSets[i].items
-            echo " items ${i} : ${items} \n"
-            printProperties(items)
             for (int j = 0; j < items.size(); j++) {
-                echo "retrieved items"
                 def item = items[j]
-                printProperties(item)
-                print "$item.authorName $item.commitId:formatter.format(new Date($item.timestamp))}: *$item.msg*\n"
-                
+                echo "Commit Information \nAuhor Name: $item.authorName\nCommit ID: $item.commitId\nTimestamp : formatter.format(new Date($item.timestamp))}\n Commit Message : *$item.msg*\n"
                 def modifiedFiles = item.affectedFiles
-                echo " modified files ${h} : ${modifiedFiles} \n"
                 for (int k = 0; k < modifiedFiles.size(); k++) {
                     files.add(modifiedFiles[k].path)
                 }
             }
         }
     }
-    echo "Found changes in files: ${files}"
+    
     def filesInSortedOrder=files.toSorted()
+    echo "Changed files: \n"
     printArray(filesInSortedOrder)
     return filesInSortedOrder
 }
@@ -99,6 +94,6 @@ def printProperties(item) {
 def printArray(array) {
     array
     .each { 
-        println "$it" 
+        println "\n\t|\n\t->$it" 
     }
 }
