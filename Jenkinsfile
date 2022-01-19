@@ -61,7 +61,7 @@ def lastSuccessfulBuild(passedBuilds, build) {
 }
  
  @NonCPS
-def getChangedFiles(passedBuilds, build) {
+def getChangedFiles(passedBuilds) {
     def files = [] as Set // as Set assumes uniqueness
     for (int h = 0; h < passedBuilds.size(); h++) {
         def changeLogSets = passedBuilds[h].changeSets
