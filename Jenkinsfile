@@ -68,7 +68,9 @@ def getChangedFiles(passedBuilds) {
         for (int i = 0; i < changeLogSets.size(); i++) {
             def items = changeLogSets[i].items
             echo " items ${i} : ${items} \n"
+            printProperties(item)
             for (int j = 0; j < items.size(); j++) {
+                echo "retrieved items"
                 def item = items[j]
                 echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
                 printProperties(item)
