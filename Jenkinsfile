@@ -38,6 +38,7 @@ node {
 
         echo "changed commits 1"
         echo "changed commits 2"
+        echo "changed commits 3"
         echo sendChangeLogs()
     }
 
