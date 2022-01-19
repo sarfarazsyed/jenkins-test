@@ -64,14 +64,17 @@ def getChangedFiles(passedBuilds) {
     def files = [] as Set // as Set assumes uniqueness
     for (int h = 0; h < passedBuilds.size(); h++) {
         def changeLogSets = passedBuilds[h].changeSets
+        echo " change log sets ${h} : ${changeLogSets} \n"
         for (int i = 0; i < changeLogSets.size(); i++) {
             def items = changeLogSets[i].items
+            echo " items ${i} : ${items} \n"
             for (int j = 0; j < items.size(); j++) {
                 def item = items[j]
                 echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
                 def modifiedFiles = item.affectedFiles
+                echo " modified files ${h} : ${modifiedFiles} \n"
                 for (int k = 0; k < modifiedFiles.size(); k++) {
-                    files.add(modifiedFiles[i].path)
+                    files.add(modifiedFiles[k].path)
                 }
             }
         }
