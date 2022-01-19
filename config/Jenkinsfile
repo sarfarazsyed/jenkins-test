@@ -26,7 +26,8 @@ node {
         if(files.size() < 0) {
             echo "No dev or stage updated configmaps found"
         } else {
-            def kubeStageCmd="kubectl create "
+            def kubeStageCmd="kubectl "
+            sh "set -o xtrace"
             files
             .each {
                 def configName = sh(returnStdout: true, script: "echo $it | sed 's#/# #g' | awk '{print \$3}'")
