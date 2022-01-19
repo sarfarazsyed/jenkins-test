@@ -25,9 +25,12 @@ node {
 
     stage('apply') {
         if(files.size() < 0) {
-            echo "No Updated configmaps found"
+            echo "No dev or stage updated configmaps found"
         } else {
-            sh("echo ${files}")
+            files
+            .each {
+                sh("echo $it | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
+            }
             //sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
         }
        // sh("echo ${files} | grep 'dev' | sed 's#/# #g' | awk '{print \$3\" ./config/configmap/\"\$3\"/dev.yaml\";}")
@@ -58,7 +61,7 @@ def getModifiedFiles(passedBuilds) {
                 for (int k = 0; k < modifiedFiles.size(); k++) {
                     def path = modifiedFiles[k].path
                     commitMsg = commitMsg + "\n\t|\n\t|-> ${modifiedFiles[k].path}"
-                    if(path.contains("config/configmap")) {
+                    if(path.contains("config/configmap")  && (path.contains("dev") || path.contains("stage"))) {
                         files.add(path)
                     }
                 }
