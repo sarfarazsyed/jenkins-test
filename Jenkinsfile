@@ -71,6 +71,7 @@ def getChangedFiles(passedBuilds) {
             for (int j = 0; j < items.size(); j++) {
                 def item = items[j]
                 echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
+                printProperties(item)
                 def modifiedFiles = item.affectedFiles
                 echo " modified files ${h} : ${modifiedFiles} \n"
                 for (int k = 0; k < modifiedFiles.size(); k++) {
@@ -81,4 +82,11 @@ def getChangedFiles(passedBuilds) {
     }
     echo "Found changes in files: ${files}"
     return files.toSorted()
+}
+
+def printProperties(item) {
+    item.properties
+    .each { 
+        println "$it.key -> $it.value" 
+    }
 }
