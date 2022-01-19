@@ -21,12 +21,8 @@ node {
         echo "branchanme $branchanme"
         echo "currentGitCommit $currentGitCommit"
         echo "previousGitCommit $previousGitCommit"
-        branchnameNonEnv = "${BRANCH}"
-        currentGitCommitNonEnv = "${GIT_COMMIT}"
-        previousGitCommitNonEnv = "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-        echo "branchnameNonEnv $branchnameNonEnv"
-        echo "currentGitCommitNonEnv $currentGitCommitNonEnv"
-        echo "previousGitCommitNonEnv $previousGitCommitNonEnv"
+        echo "Latest commit id : "
+        sh("git log -n 1")
         
 
 
