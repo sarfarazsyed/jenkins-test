@@ -14,6 +14,8 @@ node {
         echo "build" 
 
         checkout scm
+
+        sh '${env.BRANCH}'
         echo "current git commit is ${GIT_COMMIT}"
         echo "previous git commit is ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
         
