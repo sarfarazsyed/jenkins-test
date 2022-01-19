@@ -1,10 +1,6 @@
 import java.text.*
 node {
 
-    sh("ls config/configmap/a/")
-    sh("ls config/configmap/b/")
-    sh("ls config/configmap/c/")
-
    stage('Validation') {
         echo "validation"
 
