@@ -72,8 +72,9 @@ def getChangedFiles(passedBuilds) {
             for (int j = 0; j < items.size(); j++) {
                 echo "retrieved items"
                 def item = items[j]
-                echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
                 printProperties(item)
+                //echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
+                
                 def modifiedFiles = item.affectedFiles
                 echo " modified files ${h} : ${modifiedFiles} \n"
                 for (int k = 0; k < modifiedFiles.size(); k++) {
