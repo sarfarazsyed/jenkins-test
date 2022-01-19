@@ -18,7 +18,7 @@ node {
     stage('build') {
 
         checkout scm
-        sh("ls -d 4")
+        sh("ls -R")
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
