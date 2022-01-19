@@ -39,7 +39,7 @@ node {
         echo "changed commits 1"
         echo "changed commits 2"
         echo "changed commits 3"
-        echo sendChangeLogs()
+        //echo sendChangeLogs()
 
         passedBuilds = []
         lastSuccessfulBuild(passedBuilds, currentBuild)
@@ -53,21 +53,6 @@ node {
 }
 
 @NonCPS
-def sendChangeLogs() {
-    def commitMessages = ""
-    def formatter = new SimpleDateFormat('yyyy-MM-dd HH:mm')
-    def changeLogSets = currentBuild.changeSets
-    for (int i = 0; i < changeLogSets.size(); i++) {
-        def entries = changeLogSets[i].items
-        for (int j = 0; j < entries.length; j++) {
-            def entry = entries[j]
-            commitMessages = commitMessages + "${entry.author} ${entry.commitId}:\n${formatter.format(new Date(entry.timestamp))}: *${entry.msg}*\n" 
-        }
-    }
-    return "Job: `${env.JOB_NAME}`. Starting build with changes:\n${commitMessages}"
-}
-
-@NonCPS
 def lastSuccessfulBuild(passedBuilds, build) {
   if ((build != null) && (build.result != 'SUCCESS')) {
       passedBuilds.add(build)
@@ -78,11 +63,14 @@ def lastSuccessfulBuild(passedBuilds, build) {
  @NonCPS
 def getChangedFiles(passedBuilds, build) {
     def files = [] as Set // as Set assumes uniqueness
-    passedBuilds.each {
-        def changeLogSets = it.rawBuild.changeSets
-        changeLogSets.each {
-            it.items.each {
-                it.affectedFiles.each {
+    for (int h = 0; h < passedBuilds.size(); h++) {
+        def changeLogSets = passedBuilds[h].changeSets
+        for (int i = 0; i < changeLogSets.size(); i++) {
+            def items = changeLogSets[i].items
+            for (int j = 0; j < items.length; j++) {
+                def item = items[j]
+                echo "${item.author} ${item.commitId}:\n${formatter.format(new Date(item.timestamp))}: *${item.msg}*\n"
+                for (int k = 0; k < item.affectedFiles.size(); k++) {
                     files.add(it.path)
                 }
             }
