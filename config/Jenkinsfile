@@ -29,7 +29,7 @@ node {
         dir("config/configmap") {
             sh("rm -f dev.yaml")
             sh("rm -f stage.yaml")
-            sh "find . -type f | grep dev | sed 's#/# #g' | awk '{print \$2}' | xargs -I {} (kctl create configmap {} --from-file=./config/configmap/{}/s.yaml -o yaml --dry-run | kctl replace -f -)
+            sh "find . -type f | grep dev | sed 's#/# #g' | awk '{print \$2}' | xargs -I {} (kctl create configmap {} --from-file=./config/configmap/{}/s.yaml -o yaml --dry-run | kctl replace -f -)"
             //echo data
             //sh "for i in ``;do kctl crea te configmap $i --from-file=./config/configmap/$i/s.yaml -o yaml --dry-run | kctl replace -f -;done;"
         }
