@@ -29,8 +29,8 @@ node {
         dir("config/configmap") {
             sh("rm -f dev.yaml")
             sh("rm -f stage.yaml")
-            data = sh(returnStdout: true, script: "find . -type f | grep dev | sed 's#/# #g' | awk '{print \$2}' | xargs -I {} echo 'File ' {}.yaml 'stored in current folder'").trim().split('\n')
-            echo data
+            sh "find . -type f | grep dev | sed 's#/# #g' | awk '{print \$2}' | xargs -I {} echo 'File ' {}.yaml 'stored in current folder'"
+            //echo data
             //sh "for i in ``;do kctl crea te configmap $i --from-file=./config/configmap/$i/s.yaml -o yaml --dry-run | kctl replace -f -;done;"
         }
 
